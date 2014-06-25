@@ -1,0 +1,15 @@
+.\obj\main.o: user\main.c
+.\obj\main.o: user\fsmc_sram.h
+.\obj\main.o: user\stm32f10x.h
+.\obj\main.o: user\core_cm3.h
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdint.h
+.\obj\main.o: user\system_stm32f10x.h
+.\obj\main.o: user\stm32f10x_conf.h
+.\obj\main.o: .\FWlib\inc\stm32f10x_fsmc.h
+.\obj\main.o: .\user\stm32f10x.h
+.\obj\main.o: .\FWlib\inc\stm32f10x_gpio.h
+.\obj\main.o: .\FWlib\inc\stm32f10x_rcc.h
+.\obj\main.o: user\graphics.h
+.\obj\main.o: user\lcd.h
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdio.h
+.\obj\main.o: .\FWlib\inc\misc.h

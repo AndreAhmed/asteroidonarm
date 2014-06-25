@@ -1,0 +1,15 @@
+.\obj\lcd_dis24.o: user\lcd_dis24.c
+.\obj\lcd_dis24.o: user\fsmc_sram.h
+.\obj\lcd_dis24.o: user\stm32f10x.h
+.\obj\lcd_dis24.o: user\core_cm3.h
+.\obj\lcd_dis24.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdint.h
+.\obj\lcd_dis24.o: user\system_stm32f10x.h
+.\obj\lcd_dis24.o: user\stm32f10x_conf.h
+.\obj\lcd_dis24.o: .\FWlib\inc\stm32f10x_fsmc.h
+.\obj\lcd_dis24.o: .\user\stm32f10x.h
+.\obj\lcd_dis24.o: .\FWlib\inc\stm32f10x_gpio.h
+.\obj\lcd_dis24.o: .\FWlib\inc\stm32f10x_rcc.h
+.\obj\lcd_dis24.o: user\fonts.h
+.\obj\lcd_dis24.o: user\lcd.h
+.\obj\lcd_dis24.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdio.h
+.\obj\lcd_dis24.o: .\FWlib\inc\misc.h
