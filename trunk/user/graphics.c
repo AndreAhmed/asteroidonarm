@@ -246,7 +246,123 @@ void DrawSolidTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
 	
 	*/
 }
+		
+void Transform_LocalToWorld(POLYGON3D_PTR poly)
+{
+	int curr_vert;
+	if (!poly) return;
 
+
+	for (curr_vert = 0; curr_vert < poly->num_verts; curr_vert++)
+	{
+		poly->world_vlist[curr_vert].x = poly->vlist[curr_vert].x + poly->world_x;
+		poly->world_vlist[curr_vert].y = poly->vlist[curr_vert].y + poly->world_y;
+		poly->world_vlist[curr_vert].z = poly->vlist[curr_vert].z + poly->world_z;
+	}
+}
+
+void Transform_WorldToCamera( POLYGON3D_PTR poly)
+{
+	int curr_vert;
+	// assume camera at 0,0,0 with angles 0,0,0; 
+	for (curr_vert = 0; curr_vert < poly->num_verts; curr_vert++)
+	{
+		poly->camera_vlist[curr_vert].x = poly->vlist[curr_vert].x + poly->world_x;
+		poly->camera_vlist[curr_vert].y = poly->vlist[curr_vert].y + poly->world_y;
+		poly->camera_vlist[curr_vert].z = poly->vlist[curr_vert].z + poly->world_z;
+	}
+}
+
+int Rotate_Polygon3D_YAxis(POLYGON3D_PTR poly, int theta)
+{
+	float theta_Rad = (float)theta*3.14159 / 180; // trig functions work in rad
+  unsigned curr_vert;
+	
+	if (!poly)
+		return 0;
+	
+	// loop and rotate each point, very crude, no lookup!!!
+	for (curr_vert = 0; curr_vert < poly->num_verts; curr_vert++)
+	{
+		// perform rotation
+		float xr = (float)poly->vlist[curr_vert].z*sin(theta_Rad) + (float)poly->vlist[curr_vert].x*cos(theta_Rad);
+		float yr = (float)poly->vlist[curr_vert].y;
+		float zr = (float)poly->vlist[curr_vert].z*cos(theta_Rad) - (float)poly->vlist[curr_vert].x*sin(theta_Rad);
+
+		// store result back
+		poly->vlist[curr_vert].x = xr;
+		poly->vlist[curr_vert].y = yr;
+		poly->vlist[curr_vert].z = zr;
+
+
+	} // end for curr_vert
+	return 1;
+}
+
+int Draw_Polygon3D(POLYGON3D_PTR poly)
+{
+	if (!poly) return 0;
+
+	// test if the polygon is visible
+	if (poly->state)
+	{
+		int index;
+		int vertex; 
+		float x1, y1, z1,     // working variables
+			x2, y2, z2;
+
+		// loop thru and draw a line from vertices 1 to n
+		for (index = 0; index < poly->num_verts - 1; index++)
+		{
+
+			x1 = poly->camera_vlist[index].x;
+			y1 = poly->camera_vlist[index].y;
+			z1 = poly->camera_vlist[index].z;
+
+			x2 = poly->camera_vlist[index+1].x;
+			y2 = poly->camera_vlist[index+1].y;
+			z2 = poly->camera_vlist[index+1].z;
+
+			// project them!
+			x1 = (HALF_SCREEN_WIDTH + x1*viewing_distance / z1);
+			y1 = (HALF_SCREEN_HEIGHT - ASPECT_RATIO*y1*viewing_distance / z1);
+ 
+			x2 = (HALF_SCREEN_WIDTH + x2*viewing_distance / z2);
+			y2 = (HALF_SCREEN_HEIGHT - ASPECT_RATIO*y2*viewing_distance / z2);
+
+
+			// draw line from ith to ith+1 vertex
+			Draw_Line(x1, y1, x2, y2, poly->color);
+
+		} // end for
+
+		x1 = poly->camera_vlist[index].x;
+		y1 = poly->camera_vlist[index].y;
+		z1 = poly->camera_vlist[index].z;
+
+		x2 = poly->camera_vlist[0].x;
+		y2 = poly->camera_vlist[0].y;
+		z2 = poly->camera_vlist[0].z;
+
+		// project them!
+		x1 = (HALF_SCREEN_WIDTH + x1*viewing_distance / z1);
+		y1 = (HALF_SCREEN_HEIGHT - ASPECT_RATIO*y1*viewing_distance / z1);
+
+
+		x2 = (HALF_SCREEN_WIDTH + x2*viewing_distance / z2);
+		y2 = (HALF_SCREEN_HEIGHT - ASPECT_RATIO*y2*viewing_distance / z2);
+
+		// now close up polygon
+		// draw line from last vertex to 0th
+		Draw_Line(x1, y1, x2,y2, poly->color);
+
+		// return success
+		return(1);
+	} // end if
+	else
+		return(0);
+
+}  
 
 int fsin( short alpha)
 {
