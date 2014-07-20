@@ -1,8 +1,4 @@
-	/******************** (C) COPYRIGHT 2010 HY嵌入式开发工作室 ********************
-	* Description        : 演示的是显示一张240X320的 16位色图片
-			定义：	
-		
-	*/
+ 
 	/* Includes ------------------------------------------------------------------*/
 	#include "fsmc_sram.h"
 	#include "graphics.h"
@@ -18,11 +14,7 @@
 	 
 	void Delay(__IO uint32_t nCount);
 	GPIO_InitTypeDef GPIO_InitStructure;
-
-
-#define SCREEN_WIDTH 180
-#define SCREEN_HEIGHT 140
-
+ 
 
 	volatile uint32_t fractionaltimeunits = 0;
 
@@ -105,29 +97,31 @@
 		*/
 	int main(void)
 	{
-		
+			
 		unsigned char index;
-		int vx;
-		int vy;
+
 		
+	//	POLYGON2D asteroid;
+		POLYGON3D triangle;
 		// define points of asteroid
-		VERTEX2DF asteroid_vertices[8] = {
-				{33, -3}, {9, -18}, {-12, -9}, {-21, -12},
-				{-9, 6}, {-15, 15}, {-3, 27}, {21, 21} };
+//		VERTEX2DF asteroid_vertices[8] = 
+//		{
+//				{33, -3}, {9, -18}, {-12, -9}, {-21, -12},
+//				{-9, 6}, {-15, 15}, {-3, 27}, {21, 21} 
+//		};
+//		
 		
-		
-		VERTEX2DI ball = { 50, 50};
-		VERTEX2DI paddle = { 20, 100};
-		
-		POLYGON2D asteroid;
-		
+		 VERTEX3DF triangle_verts[3] = 
+	  { 0, 2, 0, 
+   	 -2, -2, 0,
+	  2, -2, 0
+	  };
 		/* System Clocks Configuration */
 		RCC_Configuration();   
 
 		/* Enable the FSMC Clock */
 		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_FSMC, ENABLE);
-		
-		
+	
 		GPIO_Configuration();
 		
 		/* Configure FSMC Bank1 NOR/PSRAM */
@@ -135,36 +129,60 @@
 
 		LCD_Init();
 
+//	
+//		// initialize the asteroid
+//		asteroid.state       = 1;   // turn it on
+//		asteroid.num_verts   = 8;
+//		asteroid.x0          = 180/2; // position it
+//		asteroid.y0          = 140/2;
+//		asteroid.color       = LCD_Blue;
 
-		// initialize the asteroid
-		asteroid.state       = 1;   // turn it on
-		asteroid.num_verts   = 8;
-		asteroid.x0          = 180/2; // position it
-		asteroid.y0          = 140/2;
-		asteroid.color       = LCD_Blue;
-
-		for ( index = 0; index <8; index++)
-			asteroid.vlist[index] = asteroid_vertices[index];
-
-
+//		for ( index = 0; index <8; index++)
+//		{
+//			asteroid.vlist[index] = asteroid_vertices[index];
+//		}
+		 
+		triangle.state = 1;   // turn it on
+		triangle.num_verts = 3;
+		triangle.x0 = WINDOW_WIDTH/2; // position it
+		triangle.y0 = WINDOW_HEIGHT/2;
+		triangle.color = LCD_Blue;
+		triangle.world_x = 0;
+		triangle.world_y = 0;
+		triangle.world_z = 150; // set world position
+		
+		for ( index = 0; index <3; index++)
+			triangle.vlist[index] = triangle_verts[index];
+	  
 		while (1)
 		{					  
-	 
-		vx = 5;
-		vy = 6;
-			
-		StartProfiler();
+	 			
+	  StartProfiler();
 		 
 		LCD_ClearFB();		
 		
-		Draw_Polygon2D(&asteroid);
-		Rotate_Polygon2D(&asteroid, 2);
- 
+	 //  	Draw_Polygon2D(&asteroid);
+	//   	Rotate_Polygon2D(&asteroid, 2);
+			
+	 if(!GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_5))        //S1
+   {
+     triangle.world_z+=1;
+	 }
+
+   if(!GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_4))       //S2
+   {
+		triangle.world_z-=1;
+   }
+			
+  	Rotate_Polygon3D_YAxis(&triangle, 1);
+    Transform_WorldToCamera(&triangle);
+   	Draw_Polygon3D(&triangle);
+			
 		LCD_Flip();	
+ 
 		StopProfiler();
-		
 		sprintf(TxBuffer," %lu fps", (unsigned long)(1000000 /fractionaltimeunits) );
-		LCD_Text(10, 10, TxBuffer, LCD_Red, LCD_Black);
+ 		LCD_Text(10, 10, TxBuffer, LCD_Red, LCD_Black);
 
 		}
 	}
@@ -233,6 +251,16 @@
 		GPIO_ResetBits(GPIOE, GPIO_Pin_1);		//RESET=0
 		GPIO_SetBits(GPIOD, GPIO_Pin_4);		    //RD=1
 		GPIO_SetBits(GPIOD, GPIO_Pin_5);			//WR=1
+		
+		
+		
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;		//D1  D2
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);					 
+
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_13;		 //D3, D4
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
  
 	 }
 

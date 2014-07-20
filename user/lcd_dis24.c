@@ -9,10 +9,10 @@
 unsigned long color1=0;
  
 
-#define fbWidth		239
-#define fbHeight	 100
+#define fbWidth		200
+#define fbHeight	 110
 
-u16 frameBuffer[fbWidth*fbHeight]; // 160*128*16bit
+u16 frameBuffer[fbWidth*fbHeight]; // 239*100*16bit
 
  
 void LCD_WR_REG(unsigned int index)
@@ -174,7 +174,7 @@ void LCD_Text(unsigned int x, unsigned int y, char *text, unsigned int charColor
  
 void lcd_wr_pixel(unsigned int a, unsigned int b, unsigned int e)		
 {
- LCD_WR_CMD(0x20, a);
+  LCD_WR_CMD(0x20, a);
 	LCD_WR_CMD(0x21, b);
 	LCD_WR_Data(e);
 }

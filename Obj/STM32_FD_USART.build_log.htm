@@ -3,8 +3,8 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\ahmed\Desktop\12 FSMC-TFT LCD\STM32-LCD-TFT.uvproj
-Project File Date:  03/23/2014
+C:\Users\ahmed\Desktop\asteroid-on-stm32\asteroidonarm\STM32-LCD-TFT.Uv2
+Project File Date:  07/20/2014
 
 <h2>Output:</h2>
 Build target 'STM3210B-EVAL'
@@ -15,41 +15,25 @@ user\lcd.h(24): warning:  #1295-D: Deprecated declaration LCD_ClearFB - give arg
   void LCD_ClearFB();
 user\lcd_dis24.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=7844 RO-data=1844 RW-data=32 ZI-data=48336  
+Program Size: Code=8224 RO-data=1800 RW-data=32 ZI-data=44536  
 FromELF: creating hex file...
 ".\Obj\STM32_FD_USART.axf" - 0 Error(s), 2 Warning(s).
-</pre>
-</body>
-</html>
-Flip - give arg types
-  void LCD_Flip();
-user\lcd.h(24): warning:  #1295-D: Deprecated declaration LCD_ClearFB - give arg types
+recated declaration LCD_ClearFB - give arg types
   void LCD_ClearFB();
-user\main.c(110): warning:  #550-D: variable "vx" was set but never used
-                int vx;
-user\main.c(111): warning:  #550-D: variable "vy" was set but never used
-                int vy;
-user\main.c(119): warning:  #177-D: variable "ball" was declared but never referenced
-                VERTEX2DI ball = { 50, 50};
-user\main.c(120): warning:  #177-D: variable "paddle" was declared but never referenced
-                VERTEX2DI paddle = { 20, 100};
-user\main.c(268): warning:  #1-D: last line of file ends without a newline
+user\main.c(296): warning:  #1-D: last line of file ends without a newline
          
-user\main.c: 7 warnings, 0 errors
-compiling graphics.c...
-user\lcd.h(20): warning:  #1295-D: Deprecated declaration LCD_Flip - give arg types
-  void LCD_Flip();
-user\lcd.h(24): warning:  #1295-D: Deprecated declaration LCD_ClearFB - give arg types
-  void LCD_ClearFB();
-user\graphics.c: 2 warnings, 0 errors
+user\main.c: 3 warnings, 0 errors
 linking...
-.\Obj\STM32_FD_USART.axf: Error: L6218E: Undefined symbol lcd_rst (referred from lcd_dis24.o).
-Not enough information to list image symbols.
-Finished: 1 information, 0 warning and 1 error messages.
-".\Obj\STM32_FD_USART.axf" - 1 Error(s), 12 Warning(s).
-Target not created
-FB();
-user\graphics.c: 2 warnings, 0 errors
+Program Size: Code=8224 RO-data=1800 RW-data=32 ZI-data=53112  
+FromELF: creating hex file...
+".\Obj\STM32_FD_USART.axf" - 0 Error(s), 5 Warning(s).
+=1800 RW-data=32 ZI-data=48336  
+FromELF: creating hex file...
+".\Obj\STM32_FD_USART.axf" - 0 Error(s), 6 Warning(s).
+_ClearFB();
+user\graphics.c(310): warning:  #177-D: variable "vertex" was declared but never referenced
+                int vertex; 
+user\graphics.c: 3 warnings, 0 errors
 compiling misc.c...
 compiling stm32f10x_exti.c...
 compiling stm32f10x_fsmc.c...
@@ -59,81 +43,10 @@ compiling stm32f10x_usart.c...
 assembling startup_stm32f10x_hd.s...
 compiling core_cm3.c...
 compiling system_stm32f10x.c...
-".\Obj\STM32_FD_USART.axf" - 4 Error(s), 9 Warning(s).
-Target not created
-n block
-        float dxdy2;
-user\graphics.c(203): error:  #268: declaration may not appear after executable statement in block
-        int y;
-user\graphics.c(224): error:  #268: declaration may not appear after executable statement in block
-   int y;
-user\graphics.c(224): error:  #101: "y" has already been declared in the current scope
-   int y;
-user\graphics.c: 2 warnings, 15 errors
-".\Obj\STM32_FD_USART.axf" - 15 Error(s), 5 Warning(s).
-Target not created
-r executable statement in block
-   int y;
-user\graphics.c(224): error:  #101: "y" has already been declared in the current scope
-   int y;
-user\graphics.c: 2 warnings, 15 errors
-".\Obj\STM32_FD_USART.axf" - 16 Error(s), 6 Warning(s).
-Target not created
-tatement in block
-        float dxdy1 = (float) (x2 - x0) / (y2 - y0);
-user\graphics.c(186): error:  #268: declaration may not appear after executable statement in block
-        float dxdy2 = (float) (x1 - x0) / (y1 - y0);
-user\graphics.c(197): error:  #29: expected an expression
-        for (int y = y0; y < y2; y++) {
-user\graphics.c(197): error:  #20: identifier "y" is undefined
-        for (int y = y0; y < y2; y++) {
-user\graphics.c(217): error:  #29: expected an expression
-        for (int y = y2; y < y1; y++) {
-user\graphics.c: 3 warnings, 16 errors
-compiling misc.c...
-compiling stm32f10x_exti.c...
-compiling stm32f10x_fsmc.c...
-compiling stm32f10x_gpio.c...
-compiling stm32f10x_rcc.c...
-compiling stm32f10x_usart.c...
-compiling core_cm3.c...
-compiling system_stm32f10x.c...
-".\Obj\STM32_FD_USART.axf" - 18 Error(s), 7 Warning(s).
-Target not created
-FD_USART.axf" - 19 Error(s), 10 Warning(s).
-Target not created
-on
-        for (int y = y2; y < y1; y++) {
-user\graphics.c(214): warning:  #223-D: function "LCD_WritetoFB" declared implicitly
-                        LCD_WritetoFB(x, y, color);
-user\graphics.c: 9 warnings, 16 errors
-".\Obj\STM32_FD_USART.axf" - 17 Error(s), 13 Warning(s).
-Target not created
-ned
-        for (int y = y0; y < y2; y++) {
-user\graphics.c(194): warning:  #223-D: function "LCD_WritetoFB" declared implicitly
-                        LCD_WritetoFB(x, y, color);
-user\graphics.c(211): error:  #29: expected an expression
-        for (int y = y2; y < y1; y++) {
-user\graphics.c(214): warning:  #223-D: function "LCD_WritetoFB" declared implicitly
-                        LCD_WritetoFB(x, y, color);
-user\graphics.c: 9 warnings, 22 errors
-".\Obj\STM32_FD_USART.axf" - 23 Error(s), 11 Warning(s).
-Target not created
- declaration may not appear after executable statement in block
-        float xr_edge = (float) x0; // right edge
-user\graphics.c(187): error:  #268: declaration may not appear after executable statement in block
-        float dxldy;
-user\graphics.c(188): error:  #268: declaration may not appear after executable statement in block
-        float dxrdy;
-user\graphics.c(190): error:  #268: declaration may not appear after executable statement in block
-        float dxdy1 = (float) (x2 - x0) / (y2 - y0);
-user\graphics.c(191): error:  #268: declaration may not appear after executable statement in block
-        float dxdy2 = (float) (x1 - x0) / (y1 - y0);
-user\graphics.c(202): error:  #29: expected an expression
-        for (int y = y0; y < y2; y++) {
-user\graphics.c(202): error:  #20: identifier "y" is undefined
-        for (int y = y0; y < y2; y++) {
-user\graphics.c: 8 warnings, 30 errors
-".\Obj\STM32_FD_USART.axf" - 31 Error(s), 10 Warning(s).
-Target not created
+linking...
+Program Size: Code=8224 RO-data=1800 RW-data=32 ZI-data=48336  
+FromELF: creating hex file...
+".\Obj\STM32_FD_USART.axf" - 0 Error(s), 8 Warning(s).
+8 RW-data=32 ZI-data=48336  
+FromELF: creating hex file...
+".\Obj\STM32_FD_USART.axf" - 0 Error(s), 9 Warning(s).
