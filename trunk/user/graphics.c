@@ -1,5 +1,11 @@
-#include <math.h>
+/*
+Basic 2D / 3D Graphics Engine (Software Renderer)
+Ahmed Saleh Tolba
+Last update: 08.09.2014
+xgameprogrammer@hotmail.com 
+*/
 
+#include <math.h>
 #include "graphics.h"
 
 
@@ -14,6 +20,9 @@ static const short tsin[91]= { 0,4,9,13,18,22,27,31,36,40,44,49,53,58,62,66,71,7
                         };
 
 
+												
+												
+										
 /**
  * @brief  Displays a line.
  * @param  Xpos: specifies the X position.
@@ -80,7 +89,7 @@ void Draw_Line(float x1, float y1, float x2, float y2, int color) {
 }
  
 
-// this function draws a POLYGON2D based on
+// this function draws a POLYGON2D
 int Draw_Polygon2D(POLYGON2D_PTR poly)
 {
 	// test if the polygon is visible
@@ -169,12 +178,15 @@ void swap(int *i, int *j) {
 void DrawSolidTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
 		int color) {
 			
-			/*
+	
 	float xl_edge;
+	float xr_edge;
 	float dxldy;
 	float dxrdy;
 	float dxdy2;
 	float dxdy1;
+	int d;
+	int y;
 	
 	// Sort our points into order of y
 	// 0 top
@@ -195,10 +207,9 @@ void DrawSolidTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
 
 
 	xl_edge	= (float) x0; // left edge
-	float xr_edge;
-	xr_edge	= (float) x0; // right edge
-
 	
+	xr_edge	= (float) x0; // right edge
+ 
 	dxdy1	= (float) (x2 - x0) / (y2 - y0);
   dxdy2	= (float) (x1 - x0) / (y1 - y0);
 
@@ -210,7 +221,6 @@ void DrawSolidTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
 		dxrdy = dxdy1;
 	}
 
-	int d;
 	// Top of the triangle
 	for ( d = y0; d < y2; d++) {
 		int x;
@@ -231,7 +241,7 @@ void DrawSolidTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
 	} else {
 		dxrdy = (float) (x2 - x1) / (y2 - y1);
 	}
- int y;
+
 	
 	for ( y = y2; y < y1; y++) {
 		int x;
@@ -244,7 +254,6 @@ void DrawSolidTriangle(int x0, int y0, int x1, int y1, int x2, int y2,
 
 	} // end for loop y
 	
-	*/
 }
 		
 void Transform_LocalToWorld(POLYGON3D_PTR poly)
@@ -309,7 +318,8 @@ int Draw_Polygon3D(POLYGON3D_PTR poly)
 		int index;
 		int vertex; 
 		float x1, y1, z1,     // working variables
-			x2, y2, z2;
+			x2, y2, z2,
+		x3, y3, z3;
 
 		// loop thru and draw a line from vertices 1 to n
 		for (index = 0; index < poly->num_verts - 1; index++)
@@ -344,6 +354,11 @@ int Draw_Polygon3D(POLYGON3D_PTR poly)
 		y2 = poly->camera_vlist[0].y;
 		z2 = poly->camera_vlist[0].z;
 
+		// for now we will only assume drawing 3D Solid Triangle, not a general polygon <-- later
+		x3 = poly->camera_vlist[1].x;
+		y3 = poly->camera_vlist[1].y;
+		z3 = poly->camera_vlist[1].z;
+		
 		// project them!
 		x1 = (HALF_SCREEN_WIDTH + x1*viewing_distance / z1);
 		y1 = (HALF_SCREEN_HEIGHT - ASPECT_RATIO*y1*viewing_distance / z1);
@@ -351,7 +366,12 @@ int Draw_Polygon3D(POLYGON3D_PTR poly)
 
 		x2 = (HALF_SCREEN_WIDTH + x2*viewing_distance / z2);
 		y2 = (HALF_SCREEN_HEIGHT - ASPECT_RATIO*y2*viewing_distance / z2);
+		
+		
+		x3 = (HALF_SCREEN_WIDTH + x3*viewing_distance / z3);
+		y3 = (HALF_SCREEN_HEIGHT - ASPECT_RATIO*y3*viewing_distance / z3);
 
+	  DrawSolidTriangle(x2, y2, x3, y3, x1, y1, poly->color); // make it solid 
 		// now close up polygon
 		// draw line from last vertex to 0th
 		Draw_Line(x1, y1, x2,y2, poly->color);

@@ -1,4 +1,12 @@
- 
+/*
+LCD Driver IlI9320, double buffered, indexed color using CLUT
+Ahmed Saleh Tolba
+Last update: 08.09.2014
+xgameprogrammer@hotmail.com 
+*/
+
+
+
 #include "fsmc_sram.h"
 #include "fonts.h"
 #include "lcd.h"
@@ -8,13 +16,32 @@
 
 unsigned long color1=0;
  
+// framebuffer properties 
+#define fbWidth		 256
+#define fbHeight	 319
 
-#define fbWidth		200
-#define fbHeight	 110
-
-u16 frameBuffer[fbWidth*fbHeight]; // 239*100*16bit
+//u16 frameBuffer[fbWidth*fbHeight]; // 239*100*16bit
 
  
+char frameBuffer[fbWidth*fbHeight/2]; // 256*200*4bit
+
+#define BLACK 0x0000
+#define BLUE 0x001F
+#define GREEN 0x07E0
+#define CYAN 0x07FF
+#define RED 0xF800
+#define BRIGHTRED 0xF900
+#define MAGENTA 0xF81F
+#define YELLOW 0xFFE0
+#define WHITE 0xFFFF
+
+
+u16 LUT[16] = {
+	//0      1      2     3    4    5    6    7    8       
+	BLACK, BRIGHTRED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE,
+	// 9      A    B      C    D     E   F
+	BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE
+};
 void LCD_WR_REG(unsigned int index)
 {
 	*(__IO uint16_t *) (Bank1_LCD_C)= index;
@@ -190,8 +217,6 @@ void LCD_WriteRegister(unsigned int index,unsigned int dat)
 
 __inline void LCD_SetCursor(unsigned int x,unsigned int y)
 {
-
-
 	LCD_WriteRegister(32, y);
 	LCD_WriteRegister(33, 319-x);
 }
@@ -204,43 +229,52 @@ __inline void LCD_WriteIndex(unsigned int idx)
 
 void LCD_WritetoFB(int x, int y, int color)
 {
-	frameBuffer[x + y*fbWidth] = color;
-}
-
-void LCD_ClearFB()
-{
-
-	u16 pixel;
-	for( pixel = 0; pixel< fbHeight*fbWidth; pixel++)
+	char *p; //pointer to a pixel in the framebuffer
+	if( (x < 0) || (y < 0) )
+			return;
+	if( (x < fbWidth) && (y < fbHeight))
 	{
-		frameBuffer[pixel]= 0x0;
-
+	// write the nibble to the framebuffer 
+	p = &frameBuffer[fbWidth/2 * y + (x>>1)];
+		 
+		if (x&1) // check if it's even 
+            *p = (*p & 0xf0) | color; // assign in the pixel on the right nibble of the pixel
+        else
+            *p = (*p & 0x0f) | (color << 4); // else the left nibble of the pixel
 	}
-
 }
-void LCD_Flip()
+
+void LCD_ClearFB(void)
+{
+	u16 pixel;
+	for( pixel = 0; pixel< fbWidth*fbHeight/2; pixel++)
+	{
+		frameBuffer[pixel]= 0;
+	} 
+}
+void LCD_Flip(void)
 {
 
-	int	i;
-
+	int	pixel;
+	char *p;
+	
 	// set cursor to 0,0
 	LCD_WriteRegister(32, 0);
   LCD_WriteRegister(33, 0);
 	
-	LCD_WriteRegister(0x0050,0x00);//GRAM horizontal start position
+	LCD_WriteRegister(0x0050,0);//GRAM horizontal start position
 	LCD_WriteRegister(0x0051,fbWidth-1);//GRAM horizontal end position
 	LCD_WriteRegister(0x0052,0);//Vertical GRAM Start position
 	LCD_WriteRegister(0x0053,fbHeight-1);//Vertical GRAM end position
 	LCD_WriteIndex(0x0022);
- 
-		for(i=0;i<fbWidth*fbHeight;i++)
-		{
-		 
-			*(__IO uint16_t *) (Bank1_LCD_D)= frameBuffer[i];; 	
 
+	p = &frameBuffer[0];
+	
+		for(pixel=0; pixel<fbWidth*fbHeight/2; pixel++, p++)
+		{
+		 *(__IO uint16_t *) (Bank1_LCD_D) = LUT[(*p) >> 4];
+			*(__IO uint16_t *) (Bank1_LCD_D)= LUT[(*p) & 0xf];
 		}
 	 
 }
-
-
-/******************* (C) COPYRIGHT 2009 STMicroelectronics *****END OF FILE****/
+ 
