@@ -28,7 +28,6 @@ void LCD_Reset(void);
 void Delay(__IO uint32_t nCount);
 unsigned int LCD_RD_data(void);
  
-
 /* LCD color */
 #define LCD_White          0xFFFF
 #define LCD_Black          0x0000

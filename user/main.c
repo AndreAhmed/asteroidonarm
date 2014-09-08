@@ -99,7 +99,8 @@
 	{
 			
 		unsigned char index;
-
+		int i,j; 
+		
 		
 	//	POLYGON2D asteroid;
 		POLYGON3D triangle;
@@ -113,8 +114,8 @@
 		
 		 VERTEX3DF triangle_verts[3] = 
 	  { 0, 2, 0, 
-   	 -2, -2, 0,
-	  2, -2, 0
+   	 -5, -5, 0,
+	  5, -5, 0
 	  };
 		/* System Clocks Configuration */
 		RCC_Configuration();   
@@ -146,7 +147,7 @@
 		triangle.num_verts = 3;
 		triangle.x0 = WINDOW_WIDTH/2; // position it
 		triangle.y0 = WINDOW_HEIGHT/2;
-		triangle.color = LCD_Blue;
+		triangle.color = 2;
 		triangle.world_x = 0;
 		triangle.world_y = 0;
 		triangle.world_z = 150; // set world position
@@ -160,10 +161,10 @@
 	  StartProfiler();
 		 
 		LCD_ClearFB();		
-		
+	 
 	 //  	Draw_Polygon2D(&asteroid);
 	//   	Rotate_Polygon2D(&asteroid, 2);
-			
+ 		
 	 if(!GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_5))        //S1
    {
      triangle.world_z+=1;

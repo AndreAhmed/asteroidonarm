@@ -28,14 +28,13 @@ typedef struct POLYGON2D_TYP
 	int color;      // could be index or PALETTENTRY
 	VERTEX2DF vlist[8]; // pointer to vertex list
 } POLYGON2D, *POLYGON2D_PTR;
-
-
-#define WINDOW_WIDTH 239
-#define WINDOW_HEIGHT 100
+ 
+#define WINDOW_WIDTH 256
+#define WINDOW_HEIGHT 319
 #define M_PI 3.145
-#define HALF_SCREEN_WIDTH  119
-#define HALF_SCREEN_HEIGHT  50
-#define ASPECT_RATIO  (float)2.4
+#define HALF_SCREEN_WIDTH  128
+#define HALF_SCREEN_HEIGHT  100
+#define ASPECT_RATIO  (float)0.80
 #define viewing_distance 250
 
 // a 3D vertex

@@ -167,7 +167,7 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4101</DriverSelection>
+            <DriverSelection>4099</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>Segger\JL2CM3.dll</Flash2>
@@ -420,14 +420,24 @@
               <FilePath>.\user\main.c</FilePath>
             </File>
             <File>
-              <FileName>pic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\user\pic.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f10x_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\user\stm32f10x_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\user\graphics.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCD.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\user\LCD.h</FilePath>
+            </File>
+            <File>
+              <FileName>graphics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\user\graphics.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -473,16 +483,6 @@
               <FileName>startup_stm32f10x_hd.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup\startup_stm32f10x_hd.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -917,14 +917,24 @@
               <FilePath>.\user\main.c</FilePath>
             </File>
             <File>
-              <FileName>pic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\user\pic.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f10x_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\user\stm32f10x_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\user\graphics.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCD.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\user\LCD.h</FilePath>
+            </File>
+            <File>
+              <FileName>graphics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\user\graphics.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -970,16 +980,6 @@
               <FileName>startup_stm32f10x_hd.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup\startup_stm32f10x_hd.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\readme.txt</FilePath>
             </File>
           </Files>
         </Group>
